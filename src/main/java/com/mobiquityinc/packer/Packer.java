@@ -87,7 +87,7 @@ public class Packer {
 	 * 
 	 * @return the selected items list
 	 */
-	static List<Item> knapsack(ItemPackage itemPackage) {
+	private static List<Item> knapsack(ItemPackage itemPackage) {
 		// Store the item size
 		int itemSize = itemPackage.getItems().size();
 
@@ -159,11 +159,9 @@ public class Packer {
 	/**
 	 * Gets the indexes of the selected items as a comma separated string.
 	 * 
-	 * Package private for easy testing.
-	 * 
 	 * @return the items indexes as string, comma separated
 	 */
-	static String itemListToCommaSeparatedIndexString(List<Item> items) {
+	private static String itemListToCommaSeparatedIndexString(List<Item> items) {
 		// Return the indexes sorted in ascending order
 		String indexes[] = items.stream().map(Item::getIndex).sorted().map(i -> i.toString()).toArray(String[]::new);
 		return String.join(",", indexes);
