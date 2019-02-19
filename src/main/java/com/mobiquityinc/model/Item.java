@@ -1,10 +1,5 @@
 package com.mobiquityinc.model;
 
-import static com.mobiquityinc.constants.ValidationConstants.MAX_COST;
-import static com.mobiquityinc.constants.ValidationConstants.MAX_WEIGHT;
-import static com.mobiquityinc.constants.ValidationConstants.MIN_COST;
-import static com.mobiquityinc.constants.ValidationConstants.MIN_WEIGHT;
-
 import org.apache.commons.validator.routines.FloatValidator;
 
 import com.mobiquityinc.exception.APIException;
@@ -33,8 +28,8 @@ public class Item {
 	 */
 	public Item(int index, float weight, float cost) {
 		super();
-		if (!FloatValidator.getInstance().isInRange(weight, MIN_WEIGHT, MAX_WEIGHT)
-				|| !FloatValidator.getInstance().isInRange(cost, MIN_COST, MAX_COST)) {
+		if (!FloatValidator.getInstance().isInRange(weight, 0, 100)
+				|| !FloatValidator.getInstance().isInRange(cost, 0, 100)) {
 			throw new APIException("The item can not be built as invalid parameters are being used.");
 		}
 		this.index = index;

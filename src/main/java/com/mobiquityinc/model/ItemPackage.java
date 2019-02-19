@@ -1,7 +1,5 @@
 package com.mobiquityinc.model;
 
-import static com.mobiquityinc.constants.ValidationConstants.MAX_WEIGHT;
-import static com.mobiquityinc.constants.ValidationConstants.MIN_WEIGHT;
 import static java.util.Collections.unmodifiableList;
 import static java.util.Comparator.comparing;
 
@@ -38,7 +36,7 @@ public class ItemPackage {
 	 */
 	public ItemPackage(int maxWeight, List<Item> items) {
 		super();
-		if (!IntegerValidator.getInstance().isInRange(maxWeight, MIN_WEIGHT, MAX_WEIGHT)) {
+		if (!IntegerValidator.getInstance().isInRange(maxWeight, 0, 100)) {
 			throw new APIException("The package can not be built as invalid parameters are being used.");
 		}
 		/*

@@ -101,21 +101,21 @@ public class Packer {
 
 		// Iterate items
 		for (int index = 1; index <= itemSize; index++) {
-
+			
+			// The current item
+			Item item = itemPackage.getItems().get(index - 1);
+			
 			// Iterate weights
 			for (int weight = 1; weight <= itemPackage.getMaxWeight(); weight++) {
 
-				// The current item
-				Item item = itemPackage.getItems().get(index - 1);
-
-				// If the item does not fits within the actual weight take the previous one
+				// If the item does not fits within the actual weight take the previous solution for the current weight
 				if (item.getWeight() > weight) {
 					possibleSolutions[index][weight] = possibleSolutions[index - 1][weight];
 				} else {
-					// Cost when taking the item
+					// Cost obtained when adding this item cost + previous cost without this item 
 					double tookItemCost = item.getCost() + possibleSolutions[index - 1][weight - item.getWeight()];
-					// Compare the costs of the actual item and the previous one, and take the
-					// better one
+					// If the total cost after adding this item is better than the previous value for this weight, it will became the better cost
+					// Fot the current weight
 					possibleSolutions[index][weight] = max(tookItemCost, possibleSolutions[index - 1][weight]);
 				}
 
@@ -144,12 +144,18 @@ public class Packer {
 		// Items with the best value
 		List<Item> selectedItems = new LinkedList<>();
 
-		for (int index = itemSize - 1; index > 0; index--) {
-
+		// The last row/column stores the maximum cost for this package
+		for (int index = itemSize; index > 0; index--) {
+			
+			/* 
+			 * If the total cost obtained in the last row/column of the matrix is not different
+			 * than the previous row, it means that this item wasn't taken, so skip the item.
+			 * If it's different it means this item is part of the solution
+			 */
 			if (possibleSolutions[index][capacity] != possibleSolutions[index - 1][capacity]) {
-
 				Item item = itemPackage.getItems().get(index - 1);
 				selectedItems.add(item);
+				// Once we add a new item, we update the total capacity
 				capacity -= item.getWeight();
 			}
 		}
